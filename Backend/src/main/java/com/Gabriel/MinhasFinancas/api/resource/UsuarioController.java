@@ -1,6 +1,7 @@
 package com.Gabriel.MinhasFinancas.api.resource;
 
 import com.Gabriel.MinhasFinancas.api.dto.UsuarioDto;
+import com.Gabriel.MinhasFinancas.exception.ErroAutenticacao;
 import com.Gabriel.MinhasFinancas.exception.RegraNegocioException;
 import com.Gabriel.MinhasFinancas.model.entity.Usuario;
 import com.Gabriel.MinhasFinancas.service.UsuarioService;
@@ -16,6 +17,17 @@ public class UsuarioController {
 
     public UsuarioController( UsuarioService service){
         this.service = service;
+    }
+
+    @PostMapping("/autenticar")
+    public ResponseEntity autentificar(@RequestBody UsuarioDto dto){
+        try {
+            Usuario usuarioAtentificado = service.autenficar(dto.getEmail(), dto.getSenha());
+            return ResponseEntity.ok(usuarioAtentificado);
+
+        }catch (ErroAutenticacao e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping
