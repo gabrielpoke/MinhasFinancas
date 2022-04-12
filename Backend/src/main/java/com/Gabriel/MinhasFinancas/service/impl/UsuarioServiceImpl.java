@@ -1,5 +1,6 @@
 package com.Gabriel.MinhasFinancas.service.impl;
 
+import com.Gabriel.MinhasFinancas.exception.RegraNegocioException;
 import com.Gabriel.MinhasFinancas.model.entity.Usuario;
 import com.Gabriel.MinhasFinancas.model.repository.UsuarioRepository;
 import com.Gabriel.MinhasFinancas.service.UsuarioService;
@@ -29,5 +30,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void validarEmail(String email) {
 
         boolean existe = repository.existsByEmail(email);
+
+        if (existe){
+            throw new RegraNegocioException("Já existe um usuário cadastrado com este email");
+        }
     }
 }
