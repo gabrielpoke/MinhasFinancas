@@ -1,11 +1,14 @@
 package com.Gabriel.MinhasFinancas.service.impl;
 
+import com.Gabriel.MinhasFinancas.exception.ErroAutenticacao;
 import com.Gabriel.MinhasFinancas.exception.RegraNegocioException;
 import com.Gabriel.MinhasFinancas.model.entity.Usuario;
 import com.Gabriel.MinhasFinancas.model.repository.UsuarioRepository;
 import com.Gabriel.MinhasFinancas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 public class UsuarioServiceImpl implements UsuarioService {
 
@@ -19,7 +22,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario autenficar(String email, String senha) {
-        return null;
+
+        Optional<Usuario> usuario = repository.findByEmail(email);
+
+        if (!usuario.isPresent()){
+            throw new ErroAutenticacao("Usuário não encontrado para email não informado");
+        }
+
+        if(!usuario.get().getSenha().equals(senha)){
+            throw new ErroAutenticacao("Senha invalida. ");
+        }
+
+        return usuario.get();
     }
 
     @Override
