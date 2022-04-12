@@ -6,10 +6,12 @@ import com.Gabriel.MinhasFinancas.model.entity.Usuario;
 import com.Gabriel.MinhasFinancas.model.repository.UsuarioRepository;
 import com.Gabriel.MinhasFinancas.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Service
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
