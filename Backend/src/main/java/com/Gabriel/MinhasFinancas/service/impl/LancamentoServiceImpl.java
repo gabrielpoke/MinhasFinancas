@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class LancamentoServiceImpl implements LancamentoService {
@@ -25,13 +26,19 @@ public class LancamentoServiceImpl implements LancamentoService {
     }
 
     @Override
+    @Transactional
     public Lancamento atualizar(Lancamento lancamento) {
-        return null;
+        /*VERIFICA SE OBJETO JA É EXISTENTE CASO NÃO ACUSA UM NULLPOINT*/
+        Objects.requireNonNull(lancamento.getId());
+        return repository.save(lancamento);
     }
 
     @Override
+    @Transactional
     public void deletar(Lancamento lancamento) {
-
+        /*VERIFICA SE OBJETO JA É EXISTENTE CASO NÃO ACUSA UM NULLPOINT*/
+        Objects.requireNonNull(lancamento.getId());
+        repository.delete(lancamento);
     }
 
     @Override
@@ -41,6 +48,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 
     @Override
     public void atualizarStatus(Lancamento lancamento, StatusLancamento status) {
-
+        lancamento.setStatus(status);
+        atualizar(lancamento);
     }
 }
