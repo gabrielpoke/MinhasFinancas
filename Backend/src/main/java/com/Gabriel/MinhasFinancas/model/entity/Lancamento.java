@@ -27,7 +27,7 @@ public class Lancamento {
     private String descricao;
 
     @Column(name = "mes")
-    private String mes;
+    private Integer mes;
 
     @Column(name = "ano")
     private String ano;
