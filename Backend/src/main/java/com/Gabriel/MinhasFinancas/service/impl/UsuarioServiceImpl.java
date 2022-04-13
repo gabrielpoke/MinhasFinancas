@@ -23,7 +23,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario autenficar(String email, String senha) {
+    public Usuario autenticar(String email, String senha) {
 
         Optional<Usuario> usuario = repository.findByEmail(email);
 
