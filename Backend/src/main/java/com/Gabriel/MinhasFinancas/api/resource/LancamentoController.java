@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/lancamentos")
+@RequiredArgsConstructor
 public class LancamentoController {
 
     private final LancamentoService service;
@@ -28,7 +28,7 @@ public class LancamentoController {
     public ResponseEntity salvar(@RequestBody LancamentoDTO lancamentoDTO){
         try {
             Lancamento entidade = converter(lancamentoDTO);
-            service.salvar(entidade);
+            entidade = service.salvar(entidade);
             return new ResponseEntity(entidade, HttpStatus.CREATED);
 
         }catch (RegraNegocioException e){
@@ -85,19 +85,26 @@ public class LancamentoController {
 
     private Lancamento converter(LancamentoDTO dto){
         Lancamento lancamento = new Lancamento();
+        lancamento.setId(dto.getId());
         lancamento.setDescricao(dto.getDescricao());
         lancamento.setAno(dto.getAno());
         lancamento.setMes(dto.getMes());
         lancamento.setValor(dto.getValor());
 
+
         /*VERIFICA POR ID SE O USUÁRIO EXISTE CASO NÃO EXISTE ELE RETORNA UMA EXCEPTION*/
-        Usuario usuario = usuarioService.obterPorId(dto.getId())
+        Usuario usuario = usuarioService.obterPorId(dto.getUsuario())
                 .orElseThrow(()-> new RegraNegocioException("Usuário não encontrado para Id informado"));
         lancamento.setUsuario(usuario);
 
         /*PEGA O VALOR QUE FOI DESCRITO PASSADO PELO USUÁRIO E COMPARA COM OS ENUMS EXISTENTES*/
-        lancamento.setTipo(TipoLancamento.valueOf(dto.getTipo()));
-        lancamento.setStatus(StatusLancamento.valueOf(dto.getStatus()));
+        if (dto.getTipo() != null) {
+            lancamento.setTipo(TipoLancamento.valueOf(dto.getTipo()));
+        }
+
+        if (dto.getStatus() != null) {
+            lancamento.setStatus(StatusLancamento.valueOf(dto.getStatus()));
+        }
 
         return lancamento;
     }
