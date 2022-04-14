@@ -36,17 +36,28 @@ public class LancamentoController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity atualizar(@PathVariable Long id, @RequestBody LancamentoDTO lancamentoDTO){
-        service.obterPorId(id).map(entity ->{
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody LancamentoDTO lancamentoDTO) {
+        return service.obterPorId(id).map(entity -> {
             try {
                 Lancamento lancamento = converter(lancamentoDTO);
                 lancamento.setId(entity.getId());
                 service.atualizar(lancamento);
                 return ResponseEntity.ok(lancamento);
-            }catch(RegraNegocioException e){
-                return  ResponseEntity.badRequest().body(e.getMessage());
+            } catch (RegraNegocioException e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
             }
-        }).orElseGet(() -> new ResponseEntity<>("Lancamento não encontrado na base de dados",HttpStatus.BAD_REQUEST));
+
+        }).orElseGet(()
+                -> new ResponseEntity("Lancamento não encontrado na base de dados", HttpStatus.BAD_REQUEST));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deletar(@PathVariable("id") Long id){
+        return service.obterPorId(id).map(entity->{
+            service.deletar(entity);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }).orElseGet(()->
+                new ResponseEntity("Lançamento não encontrado na base de Dados",HttpStatus.BAD_REQUEST));
     }
 
     private Lancamento converter(LancamentoDTO dto){
