@@ -1,5 +1,6 @@
 package com.Gabriel.MinhasFinancas.service;
 
+import com.Gabriel.MinhasFinancas.model.entity.Lancamento;
 import com.Gabriel.MinhasFinancas.model.entity.Usuario;
 
 import java.util.Optional;
