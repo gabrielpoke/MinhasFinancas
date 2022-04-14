@@ -8,6 +8,7 @@ import com.Gabriel.MinhasFinancas.model.enums.StatusLancamento;
 import com.Gabriel.MinhasFinancas.model.enums.TipoLancamento;
 import com.Gabriel.MinhasFinancas.service.LancamentoService;
 import com.Gabriel.MinhasFinancas.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +17,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/lancamentos")
 public class LancamentoController {
 
-    private LancamentoService service;
-    private UsuarioService usuarioService;
-
-    public LancamentoController(LancamentoService service){
-        this.service = service;
-    }
+    private final LancamentoService service;
+    private final UsuarioService usuarioService;
 
     @PostMapping
     public ResponseEntity salvar(@RequestBody LancamentoDTO lancamentoDTO){
