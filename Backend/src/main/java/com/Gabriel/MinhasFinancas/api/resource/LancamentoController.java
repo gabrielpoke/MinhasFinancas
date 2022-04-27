@@ -67,20 +67,21 @@ public class LancamentoController {
             @RequestParam(value = "mes", required = false) Integer mes,
             @RequestParam(value = "ano", required = false) Integer ano,
             @RequestParam(value = "usuario") Long idUsuario){
+
         Lancamento lancamentoFiltro = new Lancamento();
         lancamentoFiltro.setDescricao(descricao);
         lancamentoFiltro.setMes(mes);
         lancamentoFiltro.setAno(ano);
 
         Optional<Usuario> usuario = usuarioService.obterPorId(idUsuario);
-        if(usuario.isPresent()){
+        if( !usuario.isPresent() ){
             return ResponseEntity.badRequest().body("Não foi possível realizar a consulta");
         }else{
             lancamentoFiltro.setUsuario(usuario.get());
         }
 
         List<Lancamento> lancamentos = service.buscar(lancamentoFiltro);
-        return ResponseEntity.ok(lancamentoFiltro);
+        return ResponseEntity.ok(lancamentos);
     }
 
     private Lancamento converter(LancamentoDTO dto){
