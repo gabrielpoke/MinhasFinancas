@@ -3,6 +3,7 @@ package com.Gabriel.MinhasFinancas.service;
 import com.Gabriel.MinhasFinancas.model.entity.Lancamento;
 import com.Gabriel.MinhasFinancas.model.enums.StatusLancamento;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +22,7 @@ public interface LancamentoService {
     void validar(Lancamento lancamento);
 
     Optional<Lancamento> obterPorId(Long id);
+
+    BigDecimal obterSaldoPorUsuario(Long id);
 }
 
