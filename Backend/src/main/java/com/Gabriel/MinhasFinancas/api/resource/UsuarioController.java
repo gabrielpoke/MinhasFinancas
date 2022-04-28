@@ -56,7 +56,7 @@ public class UsuarioController {
         if(!usuario.isPresent()){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        BigDecimal saldo = lancamentoService.obterSaldoPorUsuario(id);
+        BigDecimal saldo = lancamentoService.obterSaldoPorTipoLancamentoEUsuario(id);
         return ResponseEntity.ok(saldo);
     }
 }

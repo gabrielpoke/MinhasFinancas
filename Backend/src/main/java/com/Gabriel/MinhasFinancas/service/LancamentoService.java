@@ -23,6 +23,6 @@ public interface LancamentoService {
 
     Optional<Lancamento> obterPorId(Long id);
 
-    BigDecimal obterSaldoPorUsuario(Long id);
+    BigDecimal obterSaldoPorTipoLancamentoEUsuario(Long id);
 }
 
