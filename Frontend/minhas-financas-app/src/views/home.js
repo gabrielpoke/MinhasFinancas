@@ -40,7 +40,7 @@ class Home extends React.Component {
         <p className="lead">
           <a
             className="btn btn-primary btn-lg"
-            href="#/cadastro-usuarios"
+            href="#/cadastro-usuario"
             role="button"
           >
             <i className="fa fa-users"></i> Cadastrar Usuário
