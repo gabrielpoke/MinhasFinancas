@@ -6,6 +6,16 @@ import SelectMenu from '../../components/selectMenu'
 import LancamentosTable from './lancamentosTable'
 
 class ConsultaLancamento extends React.Component {
+  state = {
+    ano: '',
+    mes: '',
+    tipo: ''
+  }
+
+  buscar = () => {
+    console.log(this.state)
+  }
+
   render() {
     const meses = [
       { label: 'Selecione...', value: '' },
@@ -60,7 +70,8 @@ class ConsultaLancamento extends React.Component {
                     type="text"
                     className="form-control"
                     id="inputAno"
-                    aria-describedby="emailHelp"
+                    value={this.state.ano}
+                    onChange={e => this.setState({ ano: e.target.value })}
                     placeholder="Digite o Ano"
                   />
                 </FormGroup>
@@ -68,6 +79,8 @@ class ConsultaLancamento extends React.Component {
                 <FormGroup label="Mês:" htmlFor="inputMes">
                   <SelectMenu
                     id="inputMes"
+                    value={this.state.mes}
+                    onChange={e => this.setState({ mes: e.target.value })}
                     className="form-control"
                     lista={meses}
                   />
@@ -76,12 +89,18 @@ class ConsultaLancamento extends React.Component {
                 <FormGroup label="Tipo Lançamento:" htmlFor="inputTipo">
                   <SelectMenu
                     id="inputTipo"
+                    value={this.state.tipo}
+                    onChange={e => this.setState({ tipo: e.target.value })}
                     className="form-control"
                     lista={tipos}
                   />
                 </FormGroup>
 
-                <button type="button" className="btn btn-success">
+                <button
+                  onClick={this.buscar}
+                  type="button"
+                  className="btn btn-success"
+                >
                   Buscar
                 </button>
 
