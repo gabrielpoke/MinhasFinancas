@@ -4,16 +4,40 @@ import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
 import LancamentosTable from './lancamentosTable'
+import LancamentoService from '../../app/service/lancamentoService'
+import LocalStorageService from '../../app/service/localstorageService'
 
 class ConsultaLancamento extends React.Component {
   state = {
     ano: '',
     mes: '',
-    tipo: ''
+    tipo: '',
+    lancamentos: []
+  }
+
+  constructor() {
+    super()
+    this.service = new LancamentoService()
   }
 
   buscar = () => {
-    console.log(this.state)
+    const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
+
+    const lancamentoFiltro = {
+      ano: this.state.ano,
+      mes: this.state.mes,
+      tipo: this.state.tipo,
+      usuario: usuarioLogado.id
+    }
+
+    this.service
+      .consultar(lancamentoFiltro)
+      .then(reposta => {
+        this.setState({ lancamentos: reposta.data })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   render() {
@@ -37,26 +61,6 @@ class ConsultaLancamento extends React.Component {
       { label: 'Selecione...', value: '' },
       { label: 'Despesas', value: 'DESPESAS' },
       { label: 'Receita', value: 'RECEITA' }
-    ]
-
-    const lancamentos = [
-      {
-        id: 1,
-        descricao: 'Salário',
-        valor: 5000,
-        mes: 1,
-        tipo: 'Receita',
-        status: 'efetivada'
-      },
-
-      {
-        id: 2,
-        descricao: 'Salário',
-        valor: 5000,
-        mes: 1,
-        tipo: 'Receita',
-        status: 'efetivada'
-      }
     ]
 
     return (
@@ -114,7 +118,7 @@ class ConsultaLancamento extends React.Component {
           <div className="row">
             <div className="col-md-12">
               <div className="bs-component">
-                <LancamentosTable lancamentos={lancamentos} />
+                <LancamentosTable lancamentos={this.state.lancamentos} />
               </div>
             </div>
           </div>
