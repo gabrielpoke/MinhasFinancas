@@ -6,12 +6,14 @@ import SelectMenu from '../../components/selectMenu'
 import LancamentosTable from './lancamentosTable'
 import LancamentoService from '../../app/service/lancamentoService'
 import LocalStorageService from '../../app/service/localstorageService'
+import * as menssages from '../../components/toastr'
 
 class ConsultaLancamento extends React.Component {
   state = {
     ano: '',
     mes: '',
     tipo: '',
+    descricao: '',
     lancamentos: []
   }
 
@@ -21,12 +23,17 @@ class ConsultaLancamento extends React.Component {
   }
 
   buscar = () => {
+    if (!this.state.ano) {
+      menssages.mensagemErro('O preenchimento do campo Ano é orbigatorio')
+    }
+
     const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')
 
     const lancamentoFiltro = {
       ano: this.state.ano,
       mes: this.state.mes,
       tipo: this.state.tipo,
+      descricao: this.state.descricao,
       usuario: usuarioLogado.id
     }
 
@@ -41,27 +48,9 @@ class ConsultaLancamento extends React.Component {
   }
 
   render() {
-    const meses = [
-      { label: 'Selecione...', value: '' },
-      { label: 'Janeiro', value: 1 },
-      { label: 'Fevereiro', value: 2 },
-      { label: 'Março', value: 3 },
-      { label: 'Abril', value: 4 },
-      { label: 'Maio', value: 5 },
-      { label: 'Junho', value: 6 },
-      { label: 'Julho', value: 7 },
-      { label: 'Agosto', value: 8 },
-      { label: 'Setembro', value: 9 },
-      { label: 'Outubro', value: 10 },
-      { label: 'Novembro', value: 11 },
-      { label: 'Dezembro', value: 12 }
-    ]
+    const meses = this.service.obterListaMeses()
 
-    const tipos = [
-      { label: 'Selecione...', value: '' },
-      { label: 'Despesas', value: 'DESPESAS' },
-      { label: 'Receita', value: 'RECEITA' }
-    ]
+    const tipos = this.service.obterListaTipo()
 
     return (
       <>
@@ -77,6 +66,17 @@ class ConsultaLancamento extends React.Component {
                     value={this.state.ano}
                     onChange={e => this.setState({ ano: e.target.value })}
                     placeholder="Digite o Ano"
+                  />
+                </FormGroup>
+
+                <FormGroup label="Descrição:" htmlFor="inputDesc">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="inputDesc"
+                    value={this.state.descricao}
+                    onChange={e => this.setState({ descricao: e.target.value })}
+                    placeholder="Digite o descricao"
                   />
                 </FormGroup>
 
