@@ -1,5 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { Dialog } from 'primereact/dialog'
+import { Button } from 'primereact/button'
+
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
@@ -14,6 +17,8 @@ class ConsultaLancamento extends React.Component {
     mes: '',
     tipo: '',
     descricao: '',
+    showConfirmDialog: false,
+    lancamentoDeletar: {},
     lancamentos: []
   }
 
@@ -51,14 +56,22 @@ class ConsultaLancamento extends React.Component {
     console.log('editando o lancamento', id)
   }
 
-  deletar = lancamento => {
+  abrirConfirmacao = lancamento => {
+    this.setState({ showConfirmDialog: true, lancamentoDeletar: lancamento })
+  }
+
+  cancelarDelecao = () => {
+    this.setState({ showConfirmDialog: false, lancamentoDeletar: {} })
+  }
+
+  deletar = () => {
     this.service
-      .deletar(lancamento.id)
+      .deletar(this.state.lancamentoDeletar.id)
       .then(response => {
         const lancamentos = this.state.lancamentos
-        const index = lancamentos.indexOf(lancamento)
+        const index = lancamentos.indexOf(this.state.lancamentoDeletar)
         lancamentos.splice(index, 1)
-        this.setState(lancamentos)
+        this.setState({ lancamentos: lancamentos, showConfirmDialog: false })
 
         menssages.mensagemSucesso('Lançamento deletado com sucesso!')
       })
@@ -71,6 +84,17 @@ class ConsultaLancamento extends React.Component {
     const meses = this.service.obterListaMeses()
 
     const tipos = this.service.obterListaTipo()
+
+    const ConfirmDialogFooter = (
+      <div>
+        <Button label="Confirma" icon="pi pi-check" onClick={this.deletar} />
+        <Button
+          label="Cancelar"
+          icon="pi pi-times"
+          onClick={this.cancelarDelecao}
+        />
+      </div>
+    )
 
     return (
       <>
@@ -140,11 +164,23 @@ class ConsultaLancamento extends React.Component {
               <div className="bs-component">
                 <LancamentosTable
                   lancamentos={this.state.lancamentos}
-                  deleteAction={this.deletar}
+                  deleteAction={this.abrirConfirmacao}
                   editarAction={this.editar}
                 />
               </div>
             </div>
+          </div>
+          <div>
+            <Dialog
+              header="Confirmação"
+              visible={this.state.showConfirmDialog}
+              style={{ width: '50vw' }}
+              modal={true}
+              footer={ConfirmDialogFooter}
+              onHide={() => this.setState({ showConfirmDialog: false })}
+            >
+              <p>Confirma a exclusão deste lançamento ?</p>
+            </Dialog>
           </div>
         </Card>
       </>
