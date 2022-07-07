@@ -15,6 +15,26 @@ export default props => {
         <td>{lancamento.status}</td>
         <td>
           <button
+            onClick={e => {
+              props.alterarStatus(lancamento, 'EFETIVADO')
+            }}
+            type="button"
+            className="btn btn-success"
+          >
+            Efetivar
+          </button>
+
+          <button
+            onClick={e => {
+              props.alterarStatus(lancamento, 'CANCELADO')
+            }}
+            type="button"
+            className="btn btn-warning"
+          >
+            Cancelar
+          </button>
+
+          <button
             type="button"
             className="btn btn-primary"
             onClick={e => props.editarAction(lancamento.id)}
