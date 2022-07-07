@@ -23,6 +23,11 @@ class CadastroLancamentos extends React.Component {
     super()
     this.service = new LancamentoService()
   }
+  componentDidMount() {
+    const params = this.props.match.params
+
+    console.log('params:', params)
+  }
 
   submit = () => {
     const usuarioLogado = LocalStorageService.obterItem('_usuario_logado')

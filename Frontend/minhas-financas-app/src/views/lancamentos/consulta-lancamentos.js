@@ -53,7 +53,7 @@ class ConsultaLancamento extends React.Component {
   }
 
   editar = id => {
-    console.log('editando o lancamento', id)
+    this.props.history.push(`/cadastro-lancamentos/${id}`)
   }
 
   abrirConfirmacao = lancamento => {
