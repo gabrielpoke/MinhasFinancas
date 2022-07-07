@@ -80,6 +80,10 @@ class ConsultaLancamento extends React.Component {
       })
   }
 
+  preparaFormularioCadastro = () => {
+    this.props.history.push('/cadastro-lancamentos')
+  }
+
   render() {
     const meses = this.service.obterListaMeses()
 
@@ -152,7 +156,11 @@ class ConsultaLancamento extends React.Component {
                   Buscar
                 </button>
 
-                <button type="button" className="btn btn-danger">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={this.preparaFormularioCadastro}
+                >
                   Cadastrar
                 </button>
               </div>
