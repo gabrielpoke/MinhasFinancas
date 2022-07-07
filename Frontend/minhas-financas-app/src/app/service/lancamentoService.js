@@ -56,7 +56,7 @@ export default class LancamentoService extends ApiService {
     }
 
     if (!lancamento.tipo) {
-      erros.push('Informe a Tipo.')
+      erros.push('Informe o Tipo.')
     }
 
     if (erros && erros.length > 0) {
