@@ -45,7 +45,13 @@ class ConsultaLancamento extends React.Component {
     this.service
       .consultar(lancamentoFiltro)
       .then(reposta => {
-        this.setState({ lancamentos: reposta.data })
+        const lista = reposta.data
+
+        if (lista.length < 1) {
+          menssages.mensagemAlert('Nenhum resultado encontrado.')
+        }
+
+        this.setState({ lancamentos: lista })
       })
       .catch(error => {
         console.log(error)

@@ -108,14 +108,14 @@ class CadastroUsuario extends React.Component {
                 className="btn btn-success"
                 onClick={this.cadastrar}
               >
-                Salvar
+                <i className="pi pi-save" /> Salvar
               </button>
               <button
                 type="button"
                 className="btn btn-danger"
                 onClick={this.cancelar}
               >
-                Cancelar
+                <i className="pi pi-times" /> Cancelar
               </button>
             </div>
           </div>

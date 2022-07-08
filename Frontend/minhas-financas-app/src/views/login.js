@@ -82,14 +82,14 @@ class Login extends React.Component {
                         type="button"
                         className="btn btn-success"
                       >
-                        Entrar
+                        <i className="pi pi-sign-in" /> Entrar
                       </button>
                       <button
                         type="button"
                         className="btn btn-danger"
                         onClick={this.prepareCadatrar}
                       >
-                        Cadastrar
+                        <i className="pi pi-plus" /> Cadastrar
                       </button>
                     </fieldset>
                   </div>

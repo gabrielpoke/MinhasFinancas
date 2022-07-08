@@ -27,7 +27,7 @@ export default class LancamentoService extends ApiService {
   obterListaTipo() {
     return [
       { label: 'Selecione...', value: '' },
-      { label: 'Despesas', value: 'DESPESAS' },
+      { label: 'Despesas', value: 'DESPESA' },
       { label: 'Receita', value: 'RECEITA' }
     ]
   }
