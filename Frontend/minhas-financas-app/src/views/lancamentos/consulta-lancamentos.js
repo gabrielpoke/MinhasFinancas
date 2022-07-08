@@ -168,7 +168,7 @@ class ConsultaLancamento extends React.Component {
                   type="button"
                   className="btn btn-success"
                 >
-                  Buscar
+                  <i className="pi pi-search" /> Buscar
                 </button>
 
                 <button
@@ -176,7 +176,7 @@ class ConsultaLancamento extends React.Component {
                   className="btn btn-danger"
                   onClick={this.preparaFormularioCadastro}
                 >
-                  Cadastrar
+                  <i className="pi pi-plus" /> Cadastrar
                 </button>
               </div>
             </div>
