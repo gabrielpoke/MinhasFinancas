@@ -32,3 +32,5 @@ class ProvedorAutenticacao extends React.Component {
     return <AuthProvider value={contexto}>{this.props.children}</AuthProvider>
   }
 }
+
+export default ProvedorAutenticacao
